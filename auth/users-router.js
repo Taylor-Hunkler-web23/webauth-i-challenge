@@ -2,13 +2,14 @@ const router = require('express').Router();
 
 const Users = require('./users-model.js');
 
+const requiresAuth =require('./middleware.js')
 
 
 
 
 const bcrypt = require ('bcryptjs');
 
-router.post('/register', (req, res) => {
+router.post('/register',  (req, res) => {
   let userInformation = req.body;
 
   const hashPassword = bcrypt.hashSync(userInformation.password, 12);
@@ -17,11 +18,34 @@ router.post('/register', (req, res) => {
   Users.add(userInformation)
     .then(saved => {
       res.status(201).json(saved);
+      
+    
     })
     .catch(error => {
       res.status(500).json(error);
     });
 });
+
+
+
+
+// router.post('/hash', (req, res) => {
+
+//   // read a password from the body
+//   let password = req.body.password;
+
+//   // hash the password using bcryptjs
+//   const hash = bcrypt.hashSync(password, 8)
+
+//   // return it to the user in an object that looks like
+//   // { password: 'original passsword', hash: 'hashed password' }
+
+
+  
+//     res.status(200).json({password, hash})
+
+  
+// })
 
 
 router.post('/login', (req, res) => {
@@ -31,9 +55,7 @@ router.post('/login', (req, res) => {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password )) {
-        //check that password is valid
-        //compare it to hash in database
-
+     
 
         res.status(200).json({ message: `Logged in!` });
       } else {
@@ -45,7 +67,7 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/users', (req, res) => {
+router.get('/users', requiresAuth, (req, res) => {
   Users.find()
     .then(users => {
       res.json(users);
