@@ -45,6 +45,15 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/users', (req, res) => {
+  Users.find()
+    .then(users => {
+      res.json(users);
+    })
+    .catch(err => res.send(err));
+});
+
+
   module.exports = router;
 
 
