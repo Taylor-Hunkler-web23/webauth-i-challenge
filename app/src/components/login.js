@@ -24,7 +24,9 @@ const Login = (props) => {
         event.preventDefault();
 
  
-axios.post('http://localhost:5000/auth/login', newLogin)            
+axios.post('http://localhost:5000/auth/login', newLogin, {
+    withCredentials: true
+  })            
             .then(response => console.log(response))
               
             
