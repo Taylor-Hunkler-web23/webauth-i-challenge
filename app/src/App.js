@@ -27,7 +27,7 @@ useEffect(() =>{
    <div>
 
    </div>
-   <h1>Users</h1>
+   <h1>Userlist</h1>
    {
      users.map(user => <div> <h1>Username: {user.username}</h1></div>)
    }
