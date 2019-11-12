@@ -75,6 +75,18 @@ router.get('/users', requiresAuth, (req, res) => {
     .catch(err => res.send(err));
 });
 
+router.get('/logout', (req, res) => {
+  if (req.session) {
+  
+   req.session.destroy();
+ 
+   res.status(200).json({message: "logged out"})
+  }else {
+    res.status(200).json({message: "logged out"})
+  }
+   
+  })
+  
 
   module.exports = router;
 
