@@ -9,7 +9,9 @@ function App() {
 const [users, setUsers] =useState([]);
 
 useEffect(() =>{
-  axios.get('http://localhost:5000/auth/users')
+  axios.get('http://localhost:5000/auth/users', {
+    withCredentials: true
+  })
   .then (res => {
     console.log(res.data);
     setUsers(res.data)
@@ -25,9 +27,9 @@ useEffect(() =>{
    <div>
 
    </div>
-   <h1>Users</h1>
+   <h1>Userlist</h1>
    {
-     users.map(user => <div> <h1>{user.username}</h1></div>)
+     users.map(user => <div> <h1>Username: {user.username}</h1></div>)
    }
     </div>
   );
